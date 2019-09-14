@@ -1,17 +1,39 @@
-let request = require('request');
+const express = require('express');
+const bodyParser = require('body-parser');
+const request = require('request');
+const app = express()
 
-let apiKey = process.env.NODE_WEATHER_API_KEY
-let city = process.argv[3]
-let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+const apiKey = process.env.NODE_WEATHER_API_KEY
 
-request(url, function(err, response, body) {
-    if(err) {
-        console.log('error:', console.err);
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs')
+
+app.get('/', function (req, res) {
+  res.render('index', {weather: null, error: null});
+})
+
+app.post('/', function (req, res) {
+  let city = req.body.city;
+  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+
+  request(url, function (err, response, body) {
+    if(err){
+      res.render('index', {weather: null, error: 'Error, please try again'});
     } else {
-        //console.log('body:', body);
-        let weather = JSON.parse(body);
-        let message = `It's ${weather.main.temp} degrees in ${weather.name}`;
-        console.log(message);
+      let weather = JSON.parse(body)
+      if(weather.main == undefined){
+        res.render('index', {weather: null, error: 'Error, please try again'});
+      } else {
+        let weatherText = `It's ${weather.main.temp}°(celsius) in ${weather.name}!`;
+        res.render('index', {weather: weatherText, error: null});
+      }
     }
-});
+  });
+})
 
+let port = process.env.NODE_PORT
+let hostname = process.env.NODE_HOST
+app.listen(port, hostname, function () {
+    console.log(`Server running at http://${hostname}:${port}/`);
+})

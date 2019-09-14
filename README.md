@@ -6,6 +6,8 @@ Node.js app to check weather. It requires to open a free account at [Open Weathe
 ## Exports required
 ```
 export NODE_WEATHER_API_KEY=<ApiKey from openweathermap>
+export NODE_PORT=3011
+export NODE_HOST=localhost
 ```
 ------
 
@@ -13,5 +15,10 @@ export NODE_WEATHER_API_KEY=<ApiKey from openweathermap>
 From the command line in the context menu just run
 ```
 npm install
-node app.js -i <CityName>
 ```
+To run the server
+```
+node app.js
+```
+Then go to 
+http://localhost:3000
