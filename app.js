@@ -3,7 +3,7 @@ let request = require('request');
 let http = require('http');
 
 let apiKey = process.env.NODE_WEATHER_API_KEY
-let city = "Grosseto"
+let city = process.argv[3]
 let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
 
 request(url, function(err, response, body) {
