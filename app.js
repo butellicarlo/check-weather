@@ -1,6 +1,4 @@
-//9cf3769c0d0e1e8634996e6205d5d837
 let request = require('request');
-let http = require('http');
 
 let apiKey = process.env.NODE_WEATHER_API_KEY
 let city = process.argv[3]
