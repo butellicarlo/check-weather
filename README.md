@@ -10,7 +10,8 @@ export NODE_WEATHER_API_KEY=<ApiKey from openweathermap>
 ------
 
 ## How does it work
-From the command line just run
+From the command line in the context menu just run
 ```
+npm install
 node app.js -i <CityName>
 ```
